@@ -1,0 +1,20 @@
+<!doctype html>
+<h1> fundus photography images result </h1>
+<form  enctype="multipart/form-data">
+  <table border = 1>
+    </tr>
+    {% for header in heading %}
+    <th> {{ header }} </th>
+    {% endfor %}
+    </tr>
+
+    {% for key, value in result.items() %}
+    <tr>
+       <th> {{ key }} </th>
+       <td> {{ value }} </td>
+    </tr>
+
+    {% endfor %}
+ </table>
+
+</form >
