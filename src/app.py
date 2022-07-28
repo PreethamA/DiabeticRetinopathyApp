@@ -5,29 +5,32 @@ import numpy as np
 from PIL import Image
 import os
 from werkzeug.utils import secure_filename
+#os.path.join(PATHFILE,)
 
 # constant values and variables
-app = Flask(__name__, template_folder="templates")
+app = Flask(__name__)
 app.config['SECRET_KEY'] = 'super secret key'
 PATHFILE = "model"
 FILE = "densenet_.h5"
 HEADINGLIST = ["filename", "DR status"]
 RETINAClASSES = ['NO', 'Mild', 'Moderate', 'Severe', 'Proliferative']
-MODEL = os.path.join(os.getcwd(), os.path.join(PATHFILE, FILE))
+MODEL = os.path.join(os.getcwd(), FILE)
 
 # index page
-@app.route('/')
+@app.route("/")
 def index():
     return render_template('index.html')
 
 # upload images processing and predicts
-@app.route("/", methods=["GET","POST"])
+@app.route("/", methods=["GET", "POST"])
 def upload_file():
+
     # post method to upload images
     if request.method == "POST":
         # check if images are uploaded or not
         if "images" not in request.files:
             return render_template('index.html'), 201
+
         # List of images
         files1 = request.files.getlist("images")
         results = {}
@@ -38,6 +41,7 @@ def upload_file():
             # get the file name with removal of special characters
             filename = secure_filename(file.filename)
             # open the file
+
             image = Image.open(file)
             # array the image
             demo = np.array(image)
@@ -62,4 +66,4 @@ def upload_file():
 
 if __name__ == "__main__":
     # run the application
-    app.run(debug=False)
+    app.run()
